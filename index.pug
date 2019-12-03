@@ -1,0 +1,34 @@
+#app
+    transition-group(name="fade" tag="ul")
+        li.postit(v-for="(p,pid) in postits",
+                :key="pid",
+                :style="postitCss(p)",
+                @mousedown="selectId($event,pid)",
+                @touchstart="selectId($event,pid)")
+            .text {{p.text}}
+            .colorList
+                .block(v-for="c in colorList",
+                    :style="{ backgroundColor: c.color }",
+                    @click="p.color = c.name")
+                i.fa.fa-pencil(@click="setText(pid)")
+                i.fa.fa-trash-o(@click="deletePostit(pid)")          
+
+    ul.datalist
+        li
+            h1(style="color : white") {{nowId}}
+        li(v-for="(p,pid) in postits")
+            input(v-model="p.text")    
+            //- input(v-model="p.color")
+            .colorList
+                .blockList(v-for="c in colorList",
+                    :style="{ backgroundColor: c.color }",
+                    @click="p.color = c.name")
+                button(@click="deletePostit(pid)") 刪除    
+        button(@click="addPostit") +新增便利貼    
+
+
+
+//- https://www.youtube.com/watch?v=-Sv4Lhdf5PQ&list=PLKVOA_ox6EbiQTIua0DGW8pHm_TO0A6Ap&index=17
+//- https://codepen.io/frank890417/pen/XgOZVJ
+//- 42:00
+
